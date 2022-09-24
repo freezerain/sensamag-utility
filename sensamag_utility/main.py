@@ -7,13 +7,19 @@ app = Typer(no_args_is_help=True)
 connection_manager = ConnectionManager()
 
 
-
 @app.command()
-def connect(user: str = None, password: str = None,
-            host: str = None, port: int = None, database: str = None, reset: bool = False):
+def connect(
+    user: str = None,
+    password: str = None,
+    host: str = None,
+    port: int = None,
+    database: str = None,
+    reset: bool = False,
+):
     if reset:
         connection_manager.reset_connection()
     connection_manager.set_connection(user, password, host, port, database)
+
 
 @app.command()
 def addlang(name: str):

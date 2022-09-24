@@ -1,5 +1,6 @@
-import mariadb
 import sys
+
+import mariadb
 from rich import print
 
 DEFAULT_USER = "sensamag_utility"
@@ -28,8 +29,14 @@ class ConnectionManager:
         print("> [bold yellow]Connection parameters reset to default!")
         self.print_params()
 
-    def set_connection(self, user: str = None, password: str = None, host: str = None,
-                       port: int = None, database: str = None):
+    def set_connection(
+        self,
+        user: str = None,
+        password: str = None,
+        host: str = None,
+        port: int = None,
+        database: str = None,
+    ):
         if user is not None:
             self.user = user
         if password is not None:
@@ -44,13 +51,15 @@ class ConnectionManager:
         self.print_params()
 
     def print_params(self):
-        print(f"""
+        print(
+            f"""
         | > User: {self.user}
         | > Password: {self.password}
         | > Host: {self.host}
         | > Port: {self.port}
         | > Database: {self.database}
-        """)
+        """
+        )
 
     def get_connection(self):
         print("> New connection to MariaDB with params:")
