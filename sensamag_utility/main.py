@@ -8,8 +8,8 @@ connection_manager = ConnectionManager()
 
 
 
-@app.command()
-def connect(user: str = None, password: str = None,
+@app.callback(invoke_without_command=True)
+def connection(user: str = None, password: str = None,
             host: str = None, port: int = None, database: str = None, reset: bool = False):
     if reset:
         connection_manager.reset_connection()
@@ -28,3 +28,4 @@ def removelang(name: str):
 @app.command()
 def listlang():
     language.list_languages(connection_manager.get_connection())
+

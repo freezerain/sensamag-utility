@@ -53,19 +53,17 @@ class ConnectionManager:
         """)
 
     def get_connection(self):
-        print("> New connection to MariaDB with params:")
-        self.print_params()
+        print("> New connection to MariaDB")
         try:
             conn = mariadb.connect(
-                user={self.user},
-                password={self.password},
-                host={self.host},
-                port={self.port},
-                database={self.database},
+                user=self.user,
+                password=self.password,
+                host=self.host,
+                port=self.port,
+                database=self.database,
             )
-            print("> :fire: [bold green]Connected successfully!")
+            print("> [bold green]Connected successfully!")
             return conn
         except mariadb.Error as exception:
-            print(f"> Error connecting to MariaDB: {exception}")
-            print("> :warning: [bold red]Process will terminate with error!")
+            print(f"> [bold red]Error connecting to MariaDB[/]: {exception}")
             sys.exit(1)
