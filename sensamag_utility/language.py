@@ -8,9 +8,11 @@ def list_languages(conn: mariadb.Connection):
     print("> Fetching languages table")
     cur = conn.cursor()
     try:
-        cur.execute("""
+        cur.execute(
+            """
         SELECT * FROM localizationlanguages
-        """)
+        """
+        )
         print_as_table(cur, name="localizationlanguages")
         print(f"> [bold green]Fetched: {cur.affected_rows} rows")
     except mariadb.Error as exception:
@@ -18,19 +20,24 @@ def list_languages(conn: mariadb.Connection):
 
 
 def add_language(conn: mariadb.Connection, name: str, culture: str, priority: int):
-    print(f"""
+    print(
+        f"""
     > Adding new language:
     | > name: {name}
     | > culture: {culture}
     | > priority: {priority}
-    """)
+    """
+    )
     cur = conn.cursor()
     try:
         cur.execute(
             "INSERT INTO localizationlanguages (Name,Culture, Priority) VALUES (?, ?, ?)",
-            (name, culture, priority))
+            (name, culture, priority),
+        )
         conn.commit()
-        print(f"> [bold green]Language {name} is added successfully with {cur.lastrowid} id")
+        print(
+            f"> [bold green]Language {name} is added successfully with {cur.lastrowid} id"
+        )
     except mariadb.Error as exception:
         print(f"> [bold red]Error adding new language[/]: {exception}")
 
