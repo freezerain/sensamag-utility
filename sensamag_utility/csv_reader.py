@@ -3,7 +3,7 @@ import os
 
 
 def read_data(path: str):
-    with open(path, newline='', encoding='utf-8') as csvfile:
+    with open(path, newline="", encoding="utf-8") as csvfile:
         reader = csv.DictReader(csvfile)
         data = []
         for row in reader:
@@ -17,7 +17,7 @@ def read_data(path: str):
 def write_data(path: str, data, columns):
     if os.path.isdir(path):
         path = os.path.join(path, "data.csv")
-    with open(path, 'w', newline='', encoding="utf-8") as csvfile:
+    with open(path, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=columns)
         writer.writeheader()
         for row in data:
