@@ -16,8 +16,6 @@ class ConnectionManager:
         self.host = DEFAULT_HOST
         self.port = DEFAULT_PORT
         self.database = DEFAULT_DATABASE
-        print("> Default connection parameters:")
-        self.print_params()
 
     def reset_connection(self):
         self.user = DEFAULT_USER
@@ -26,7 +24,6 @@ class ConnectionManager:
         self.port = DEFAULT_PORT
         self.database = DEFAULT_DATABASE
         print("> [bold yellow]Connection parameters reset to default!")
-        self.print_params()
 
     def set_connection(self, user: str = None, password: str = None, host: str = None,
                        port: int = None, database: str = None):
@@ -53,7 +50,6 @@ class ConnectionManager:
         """)
 
     def get_connection(self):
-        print("> New connection to MariaDB")
         try:
             conn = mariadb.connect(
                 user=self.user,
