@@ -1,6 +1,7 @@
 import mariadb
 from rich import print
 
+from sensamag_utility.csv_schema import CSVSchema as Schema
 from sensamag_utility.connection_manager import ConnectionManager
 from sensamag_utility.csv_reader import write_data
 
@@ -10,10 +11,13 @@ def export_db(conn: mariadb.Connection, path: str):
     cur = conn.cursor(dictionary=True)
     try:
         cur.execute(
-            """
-        SELECT textreferences.Name AS Reference, textcontents.Text AS Content,
-            localizationlanguages.Name AS Language, textcontents.Id AS ContentId,
-            textcontents.TextReferences_Id AS ReferenceId, textcontents.Language_Id AS LanguageId
+            f"""
+        SELECT textreferences.Name AS {Schema.REFERENCE_NAME.value},
+            textcontents.Text AS {Schema.CONTENT_NAME.value},
+            localizationlanguages.Name AS {Schema.LANGUAGE_NAME.value},
+            textcontents.TextReferences_Id AS {Schema.REFERENCE_ID.value},
+            textcontents.Id AS {Schema.CONTENT_ID.value},
+            textcontents.Language_Id AS {Schema.LANGUAGE_ID.value}
         FROM textcontents INNER JOIN (localizationlanguages, textreferences)
             ON textcontents.Language_Id = localizationlanguages.Id
             AND textcontents.TextReferences_Id = textreferences.Id
