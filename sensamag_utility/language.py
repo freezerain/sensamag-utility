@@ -1,11 +1,18 @@
+"""
+Scripts to manipulate Language DataTable.
+"""
 import mariadb
-from rich import print
+from rich import print as rprint
 
 from sensamag_utility.utility import print_as_table
 
 
-def list_languages(conn: mariadb.Connection):
-    print("> Fetching languages table")
+def list_languages(conn: mariadb.Connection) -> None:
+    """
+    Print a list of languages to console.
+    :param conn: connection object.
+    """
+    rprint("> Fetching languages table")
     cur = conn.cursor()
     try:
         cur.execute(
@@ -14,13 +21,22 @@ def list_languages(conn: mariadb.Connection):
         """
         )
         print_as_table(cur, name="localizationlanguages")
-        print(f"> [bold green]Fetched: {cur.affected_rows} rows")
+        rprint(f"> [bold green]Fetched: {cur.affected_rows} rows")
     except mariadb.Error as exception:
-        print(f"> [bold red]Error fetching languages:[/] {exception}")
+        raise Exception("Error fetching languages!") from exception
 
 
-def add_language(conn: mariadb.Connection, name: str, culture: str, priority: int):
-    print(
+def add_language(
+    conn: mariadb.Connection, name: str, culture: str, priority: int
+) -> None:
+    """
+    Add new language to the database.
+    :param conn: connection object.
+    :param name: name of the new language.
+    :param culture: culture of the new language.
+    :param priority: priority of the new language.
+    """
+    rprint(
         f"""
     > Adding new language:
     | > name: {name}
@@ -35,19 +51,27 @@ def add_language(conn: mariadb.Connection, name: str, culture: str, priority: in
             (name, culture, priority),
         )
         conn.commit()
-        print(
+        rprint(
             f"> [bold green]Language {name} is added successfully with {cur.lastrowid} id"
         )
     except mariadb.Error as exception:
-        print(f"> [bold red]Error adding new language[/]: {exception}")
+        raise Exception(
+            f"Error adding new language with name: "
+            f"{name}, culture: {culture}, priority: {priority}"
+        ) from exception
 
 
-def remove_language(conn: mariadb.Connection, lang_id: int):
-    print(f"> Removing language by id: {lang_id}")
+def remove_language(conn: mariadb.Connection, lang_id: int) -> None:
+    """
+    Remove language from DB.
+    :param conn: connection object.
+    :param lang_id: id of the lang to remove.
+    """
+    rprint(f"> Removing language by id: {lang_id}")
     cur = conn.cursor()
     try:
         cur.execute("DELETE FROM localizationlanguages WHERE Id = (?)", (lang_id,))
         conn.commit()
-        print(f"> [bold green]Language with id: {lang_id} is removed successfully!")
+        rprint(f"> [bold green]Language with id: {lang_id} is removed successfully!")
     except mariadb.Error as exception:
-        print(f"> [bold red]Error removing language:[/] {exception}")
+        raise Exception(f"Error removing language with id: {lang_id}") from exception
