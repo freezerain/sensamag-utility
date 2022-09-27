@@ -6,7 +6,7 @@ from rich import print
 
 class CSVSchema(Enum):
     REFERENCE_NAME = "Reference"
-    CONTENT_NAME = "Content"
+    CONTENT_TEXT = "Content"
     LANGUAGE_NAME = "Language"
     REFERENCE_ID = "ReferenceId"
     CONTENT_ID = "ContentId"

@@ -3,6 +3,9 @@ from typer import Typer
 
 from sensamag_utility import exporter, language
 from sensamag_utility.connection_manager import ConnectionManager
+from sensamag_utility.csv_schema import CSVSchema
+from sensamag_utility.drop_table import drop_text_table
+from sensamag_utility.importer import import_csv_to_db
 
 app = Typer(no_args_is_help=True)
 connection_manager = ConnectionManager()
@@ -16,8 +19,6 @@ def connection(
         port: int = None,
         database: str = None,
 ):
-    if reset:
-        connection_manager.reset_connection()
     connection_manager.set_connection(user, password, host, port, database)
 
 
@@ -47,3 +48,20 @@ def listlang():
 def exportdb(path: str = typer.Option(..., prompt=True)):
     with connection_manager.get_connection() as conn:
         exporter.export_db(conn, path)
+
+
+@app.command()
+def droptexttable():
+    with connection_manager.get_connection() as conn:
+        drop_text_table(conn)
+
+
+@app.command()
+def importdb(path: str = typer.Option(..., prompt=True)):
+    with connection_manager.get_connection() as conn:
+        import_csv_to_db(conn, path)
+
+
+@app.command()
+def csvschema():
+    CSVSchema.print_schema()

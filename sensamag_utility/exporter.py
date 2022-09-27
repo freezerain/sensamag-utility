@@ -13,7 +13,7 @@ def export_db(conn: mariadb.Connection, path: str):
         cur.execute(
             f"""
         SELECT textreferences.Name AS {Schema.REFERENCE_NAME.value},
-            textcontents.Text AS {Schema.CONTENT_NAME.value},
+            textcontents.Text AS {Schema.CONTENT_TEXT.value},
             localizationlanguages.Name AS {Schema.LANGUAGE_NAME.value},
             textcontents.TextReferences_Id AS {Schema.REFERENCE_ID.value},
             textcontents.Id AS {Schema.CONTENT_ID.value},
