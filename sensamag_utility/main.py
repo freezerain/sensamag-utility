@@ -10,12 +10,11 @@ connection_manager = ConnectionManager()
 
 @app.callback(invoke_without_command=True)
 def connection(
-    user: str = None,
-    password: str = None,
-    host: str = None,
-    port: int = None,
-    database: str = None,
-    reset: bool = False,
+        user: str = None,
+        password: str = None,
+        host: str = None,
+        port: int = None,
+        database: str = None,
 ):
     if reset:
         connection_manager.reset_connection()
@@ -24,18 +23,18 @@ def connection(
 
 @app.command()
 def addlang(
-    name: str = typer.Option(..., prompt=True),
-    culture: str = typer.Option(..., prompt=True),
-    priority: int = typer.Option(..., prompt=True),
+        name: str = typer.Option(..., prompt=True),
+        culture: str = typer.Option(..., prompt=True),
+        priority: int = typer.Option(..., prompt=True),
 ):
     with connection_manager.get_connection() as conn:
         language.add_language(conn, name, culture, priority)
 
 
 @app.command()
-def removelang(lang_id: int = typer.Option(..., prompt=True)):
+def removelang(langid: int = typer.Option(..., prompt=True)):
     with connection_manager.get_connection() as conn:
-        language.remove_language(conn, lang_id)
+        language.remove_language(conn, langid)
 
 
 @app.command()
