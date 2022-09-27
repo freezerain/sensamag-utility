@@ -16,11 +16,11 @@ connection_manager = ConnectionManager()
 
 @app.callback(invoke_without_command=True)
 def connection(
-        user: str = None,
-        password: str = None,
-        host: str = None,
-        port: int = None,
-        database: str = None,
+    user: str = None,
+    password: str = None,
+    host: str = None,
+    port: int = None,
+    database: str = None,
 ) -> None:
     """
     Override default connection params.
@@ -45,9 +45,9 @@ def importdb(path: str = typer.Option(..., prompt=True)) -> None:
 
 @app.command()
 def addlang(
-        name: str = typer.Option(..., prompt=True),
-        culture: str = typer.Option(..., prompt=True),
-        priority: int = typer.Option(..., prompt=True),
+    name: str = typer.Option(..., prompt=True),
+    culture: str = typer.Option(..., prompt=True),
+    priority: int = typer.Option(..., prompt=True),
 ) -> None:
     """
     Add new language to MariaDB.

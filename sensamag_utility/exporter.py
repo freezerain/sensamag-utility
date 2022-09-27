@@ -32,7 +32,9 @@ def export_db(conn: mariadb.Connection, path: str) -> None:
         )
         headers = [row[0] for row in cur.description]
         write_data(path, cur, headers)
-        rprint(f"> [bold green]Successfully written "
-               f"[yellow]{cur.affected_rows}[/] rows to [yellow]{path}[/]! ")
+        rprint(
+            f"> [bold green]Successfully written "
+            f"[yellow]{cur.affected_rows}[/] rows to [yellow]{path}[/]! "
+        )
     except mariadb.Error as exception:
         raise Exception("Error exporting data!") from exception

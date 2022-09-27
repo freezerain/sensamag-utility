@@ -3,14 +3,15 @@ CSV schema for typification.
 """
 from enum import Enum
 
-from rich.table import Table
 from rich import print as rprint
+from rich.table import Table
 
 
 class CSVSchema(Enum):
     """
     This is a CSV schema, values are column names in CSV file.
     """
+
     REFERENCE_NAME = "Reference"
     CONTENT_TEXT = "Content"
     LANGUAGE_NAME = "Language"
