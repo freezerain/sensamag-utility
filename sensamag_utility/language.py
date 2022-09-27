@@ -26,7 +26,9 @@ def list_languages(conn: mariadb.Connection) -> None:
         raise Exception("Error fetching languages!") from exception
 
 
-def add_language(conn: mariadb.Connection, name: str, culture: str, priority: int) -> None:
+def add_language(
+    conn: mariadb.Connection, name: str, culture: str, priority: int
+) -> None:
     """
     Add new language to the database.
     :param conn: connection object.
@@ -53,8 +55,10 @@ def add_language(conn: mariadb.Connection, name: str, culture: str, priority: in
             f"> [bold green]Language {name} is added successfully with {cur.lastrowid} id"
         )
     except mariadb.Error as exception:
-        raise Exception(f"Error adding new language with name: "
-                        f"{name}, culture: {culture}, priority: {priority}") from exception
+        raise Exception(
+            f"Error adding new language with name: "
+            f"{name}, culture: {culture}, priority: {priority}"
+        ) from exception
 
 
 def remove_language(conn: mariadb.Connection, lang_id: int) -> None:
