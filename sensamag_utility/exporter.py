@@ -1,9 +1,9 @@
 import mariadb
 from rich import print
 
-from sensamag_utility.csv_schema import CSVSchema as Schema
 from sensamag_utility.connection_manager import ConnectionManager
 from sensamag_utility.csv_reader import write_data
+from sensamag_utility.csv_schema import CSVSchema as Schema
 
 
 def export_db(conn: mariadb.Connection, path: str):

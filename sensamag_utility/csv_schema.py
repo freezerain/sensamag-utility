@@ -1,7 +1,7 @@
 from enum import Enum
 
-from rich.table import Table
 from rich import print
+from rich.table import Table
 
 
 class CSVSchema(Enum):

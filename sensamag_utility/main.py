@@ -13,20 +13,20 @@ connection_manager = ConnectionManager()
 
 @app.callback(invoke_without_command=True)
 def connection(
-        user: str = None,
-        password: str = None,
-        host: str = None,
-        port: int = None,
-        database: str = None,
+    user: str = None,
+    password: str = None,
+    host: str = None,
+    port: int = None,
+    database: str = None,
 ):
     connection_manager.set_connection(user, password, host, port, database)
 
 
 @app.command()
 def addlang(
-        name: str = typer.Option(..., prompt=True),
-        culture: str = typer.Option(..., prompt=True),
-        priority: int = typer.Option(..., prompt=True),
+    name: str = typer.Option(..., prompt=True),
+    culture: str = typer.Option(..., prompt=True),
+    priority: int = typer.Option(..., prompt=True),
 ):
     with connection_manager.get_connection() as conn:
         language.add_language(conn, name, culture, priority)
