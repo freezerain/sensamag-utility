@@ -1,7 +1,7 @@
-[![DeepSource](https://deepsource.io/gh/freezerain/sensamag-utility.svg/?label=active+issues&show_trend=true&token=tqqs40FSee57xeO0zqak7Fs1)](https://deepsource.io/gh/freezerain/sensamag-utility/?ref=repository-badge)
-[![DeepSource](https://deepsource.io/gh/freezerain/sensamag-utility.svg/?label=resolved+issues&show_trend=true&token=tqqs40FSee57xeO0zqak7Fs1)](https://deepsource.io/gh/freezerain/sensamag-utility/?ref=repository-badge)
+[![DeepSource](https://deepsource.io/gh/freezerain/sensamag_utility.svg/?label=active+issues&show_trend=true&token=tqqs40FSee57xeO0zqak7Fs1)](https://deepsource.io/gh/freezerain/sensamag_utility/?ref=repository-badge)
+[![DeepSource](https://deepsource.io/gh/freezerain/sensamag_utility.svg/?label=resolved+issues&show_trend=true&token=tqqs40FSee57xeO0zqak7Fs1)](https://deepsource.io/gh/freezerain/sensamag_utility/?ref=repository-badge)
 
-This package is used to update Sensamag data base.
+This package is used to update Sensamag database.
 
 ### Usage:
 1. Install as standard pip package: `pip install sensamag`
@@ -15,11 +15,7 @@ This package is used to update Sensamag data base.
 4) To add new language using oneliner: `sensamag addlang --name German --culture de-DE --priority 5`
 5) To export data: `sensamag exportdb --path <path to folder to create *.csv>`
 
-### Notes:
-By default, csv columns are:
-    Reference, Content, Language, ContentId, ReferenceId and LanguageId.
+### CSV Schema:
+To successfully import CSV data, headers should contain exact column names to be parsed.
 
-Both importer and exporter should respect this schema. 
-### TODO:
-1) CSV to DB importer
-2) Proper documentation
+Look up exact names with `sensamag csvschema`

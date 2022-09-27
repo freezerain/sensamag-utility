@@ -1,13 +1,20 @@
+"""
+Scripts to export data from database to CSV file.
+"""
 import mariadb
-from rich import print
+from rich import print as rprint
 
-from sensamag_utility.csv_schema import CSVSchema as Schema
-from sensamag_utility.connection_manager import ConnectionManager
 from sensamag_utility.csv_reader import write_data
+from sensamag_utility.csv_schema import CSVSchema as Schema
 
 
-def export_db(conn: mariadb.Connection, path: str):
-    print(f"> Exporting data to: {path}")
+def export_db(conn: mariadb.Connection, path: str) -> None:
+    """
+    Export database text data to *.csv file.
+    :param conn: connection object.
+    :param path: path to *.csv file to create.
+    """
+    rprint(f"> Exporting data to: {path}")
     cur = conn.cursor(dictionary=True)
     try:
         cur.execute(
@@ -25,8 +32,7 @@ def export_db(conn: mariadb.Connection, path: str):
         )
         headers = [row[0] for row in cur.description]
         write_data(path, cur, headers)
-        print(
-            f"> [bold green]Succesfully written [yellow]{cur.affected_rows}[/] rows to [yellow]{path}[/]!"
-        )
+        rprint(f"> [bold green]Successfully written "
+               f"[yellow]{cur.affected_rows}[/] rows to [yellow]{path}[/]! ")
     except mariadb.Error as exception:
-        print(f"> [bold red]Error exporting data:[/] {exception}")
+        raise Exception("Error exporting data!") from exception
