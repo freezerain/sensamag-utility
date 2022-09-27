@@ -1,10 +1,16 @@
+"""
+CSV schema for typification.
+"""
 from enum import Enum
 
 from rich.table import Table
-from rich import print
+from rich import print as rprint
 
 
 class CSVSchema(Enum):
+    """
+    This is a CSV schema, values are column names in CSV file.
+    """
     REFERENCE_NAME = "Reference"
     CONTENT_TEXT = "Content"
     LANGUAGE_NAME = "Language"
@@ -13,9 +19,12 @@ class CSVSchema(Enum):
     LANGUAGE_ID = "LanguageId"
 
     @staticmethod
-    def print_schema():
+    def print_schema() -> None:
+        """
+        Print CSV schema to console.
+        """
         table = Table("Field", "CSV Column", title="CSV Schema")
         for field in CSVSchema:
             table.add_row(field.name, field.value)
 
-        print(table)
+        rprint(table)

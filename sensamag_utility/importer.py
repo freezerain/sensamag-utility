@@ -1,8 +1,11 @@
+"""
+Scripts to import data from csv to database.
+"""
 import csv
 import os.path
 
 import mariadb
-from rich import print
+from rich import print as rprint
 
 from sensamag_utility.csv_schema import CSVSchema
 
@@ -18,10 +21,10 @@ def import_csv_to_db(conn: mariadb.Connection, path: str):
     if os.path.isdir(path):
         path = os.path.join(path, "data.csv")
     try:
-        print(f"> Importing: {path}")
+        rprint(f"> Importing: {path}")
         with open(path, newline='', encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile)
-            print(f"> File loaded from {path}")
+            rprint(f"> File loaded from {path}")
             if not all(field.value in reader.fieldnames for field in CSVSchema):
                 raise Exception("Not all fields are present in the CSV file. "
                                 "Run \"sensamag csvschema\" to see column names.")
@@ -32,12 +35,17 @@ def import_csv_to_db(conn: mariadb.Connection, path: str):
                 except Exception as exception:
                     raise Exception(f"> [bold red] Error parsing row:[/] {row}") from exception
             conn.commit()
-            print(f"> [bold green]Successfully imported [yellow]{reader.line_num}[/] rows!")
+            rprint(f"> [bold green]Successfully imported [yellow]{reader.line_num}[/] rows!")
     except Exception as exception:
-        print(f"> [bold red]Error importing .csv : [/] {exception}")
+        raise Exception(f"Error importing .csv from {path}") from exception
 
 
-def __parse_row(cur: mariadb.Cursor, row: dict):
+def __parse_row(cur: mariadb.Cursor, row: dict) -> None:
+    """
+    Execute SQL statement and add csv row to database.
+    :param cur: cursor from connection object.
+    :param row: row with data from csv file.
+    """
     ref_name = row[CSVSchema.REFERENCE_NAME.value].strip()
     ref_id = row[CSVSchema.REFERENCE_ID.value].strip()
     cont_text = row[CSVSchema.CONTENT_TEXT.value]
