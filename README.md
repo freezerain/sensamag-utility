@@ -17,5 +17,3 @@ This package is used to update Sensamag database.
 
 ### CSV Schema:
 To successfully import CSV data, headers should contain exact column names to be parsed.
-
-Look up exact names with `sensamag csvschema`
