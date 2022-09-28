@@ -71,8 +71,15 @@ def __parse_row(cur: mariadb.Cursor, row: dict) -> None:
         ref_name = cur.next()[1]
     # if only name provided -> create new reference
     elif ref_name:
-        cur.execute("INSERT INTO textreferences (Name) VALUES (?)", (ref_name,))
-        ref_id = cur.lastrowid
+        # Check if name already in database
+        cur.execute("SELECT Id, Name FROM textreferences WHERE Name = ?", (ref_name,))
+        check_result = cur.next()
+        if check_result:
+            ref_id = check_result[0]
+        # If name is new then create new reference
+        else:
+            cur.execute("INSERT INTO textreferences (Name) VALUES (?)", (ref_name,))
+            ref_id = cur.lastrowid
 
     # 2) Language
     # Verify language name and id
