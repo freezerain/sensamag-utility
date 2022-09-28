@@ -128,7 +128,7 @@ def __parse_row(cur: mariadb.Cursor, row: dict) -> None:
                 f"\nProvided: lang_id: {lang_id}, ref_id: {ref_id}."
             )
         cur.execute(
-            "INSERT INTO textcontents (name, text, Language_Id, TextReferences_Id) "
+            "INSERT INTO textcontents (name, text, TextReferences_Id, Language_Id) "
             "VALUES (?, ?, ?, ?)",
             (ref_name, cont_text, ref_id, lang_id),
         )
