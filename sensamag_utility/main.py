@@ -72,7 +72,7 @@ def exportdb(path: str = typer.Option(..., prompt=True)) -> None:
 @app.command()
 def droptables() -> None:
     """
-    Clear or rows in "Text References" and "Text Contents" DataTables in MariaDB.
+    Drop "Text References" and "Text Contents" DataTables in MariaDB.
     """
     with connection_manager.get_connection() as conn:
         drop_text_table(conn)
@@ -81,7 +81,7 @@ def droptables() -> None:
 @app.command()
 def deletetables() -> None:
     """
-    Truncate "Text References" and "Text Contents" purging all rows but keep tables.
+    Delete all rows in "Text References" and "Text Contents" but keep tables.
     """
     with connection_manager.get_connection() as conn:
         delete_text_table(conn)
