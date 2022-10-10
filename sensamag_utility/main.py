@@ -7,7 +7,7 @@ from typer import Typer
 from sensamag_utility import exporter, language
 from sensamag_utility.connection_manager import ConnectionManager
 from sensamag_utility.csv_schema import CSVSchema
-from sensamag_utility.drop_table import drop_text_table
+from sensamag_utility.drop_table import delete_text_table, drop_text_table
 from sensamag_utility.importer import import_csv_to_db
 
 app = Typer(no_args_is_help=True)
@@ -72,10 +72,19 @@ def exportdb(path: str = typer.Option(..., prompt=True)) -> None:
 @app.command()
 def droptables() -> None:
     """
-    Clear or rows in "Text References" and "Text Contents" DataTables in MariaDB.
+    Drop "Text References" and "Text Contents" DataTables in MariaDB.
     """
     with connection_manager.get_connection() as conn:
         drop_text_table(conn)
+
+
+@app.command()
+def deletetables() -> None:
+    """
+    Delete all rows in "Text References" and "Text Contents" but keep tables.
+    """
+    with connection_manager.get_connection() as conn:
+        delete_text_table(conn)
 
 
 @app.command()
