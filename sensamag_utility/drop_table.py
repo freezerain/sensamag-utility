@@ -13,10 +13,11 @@ def drop_text_table(conn: mariadb.Connection) -> None:
     rprint("> Removing rows from textcontents and textreferences tables!")
     cur = conn.cursor()
     try:
-        cur.execute("DROP TABLE textcontents; DROP TABLE textreferences;")
+        cur.execute("DROP TABLE textcontents")
+        cur.execute("DROP TABLE textreferences")
         conn.commit()
         rprint(
             f"> [bold green]Removed successfully [yellow]{cur.affected_rows}[/yellow] rows."
         )
     except mariadb.Error as exception:
-        raise Exception(">Error dropping tables!") from exception
+        raise Exception("> Error dropping tables!") from exception
