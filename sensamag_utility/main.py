@@ -7,7 +7,7 @@ from typer import Typer
 from sensamag_utility import exporter, language
 from sensamag_utility.connection_manager import ConnectionManager
 from sensamag_utility.csv_schema import CSVSchema
-from sensamag_utility.drop_table import drop_text_table
+from sensamag_utility.drop_table import drop_text_table, delete_text_table
 from sensamag_utility.importer import import_csv_to_db
 
 app = Typer(no_args_is_help=True)
@@ -16,11 +16,11 @@ connection_manager = ConnectionManager()
 
 @app.callback(invoke_without_command=True)
 def connection(
-    user: str = None,
-    password: str = None,
-    host: str = None,
-    port: int = None,
-    database: str = None,
+        user: str = None,
+        password: str = None,
+        host: str = None,
+        port: int = None,
+        database: str = None,
 ) -> None:
     """
     Override default connection params.
@@ -45,9 +45,9 @@ def importdb(path: str = typer.Option(..., prompt=True)) -> None:
 
 @app.command()
 def addlang(
-    name: str = typer.Option(..., prompt=True),
-    culture: str = typer.Option(..., prompt=True),
-    priority: int = typer.Option(..., prompt=True),
+        name: str = typer.Option(..., prompt=True),
+        culture: str = typer.Option(..., prompt=True),
+        priority: int = typer.Option(..., prompt=True),
 ) -> None:
     """
     Add new language to MariaDB.
@@ -76,6 +76,15 @@ def droptables() -> None:
     """
     with connection_manager.get_connection() as conn:
         drop_text_table(conn)
+
+
+@app.command()
+def deletetables() -> None:
+    """
+    Truncate "Text References" and "Text Contents" purging all rows but keep tables.
+    """
+    with connection_manager.get_connection() as conn:
+        delete_text_table(conn)
 
 
 @app.command()
